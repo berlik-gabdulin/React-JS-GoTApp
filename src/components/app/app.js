@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Col, Row, Container } from 'reactstrap';
+import { Col, Row, Container, Button } from 'reactstrap';
 // import styled from 'styled-components';
 
 import Header from '../header';
@@ -53,7 +53,6 @@ export default class App extends Component {
     }
 
     render() {
-        const {toggleRandomChar} = this.props;
         const {randomVisibleChar} = this.state;
         const randomChar = randomVisibleChar ? <RandomChar /> : null;
 
@@ -66,7 +65,7 @@ export default class App extends Component {
                     <Row>
                         <Col lg={{ size: 5, offset: 0 }}>
                             {randomChar}
-                            <button onClick={this.toggleRandomChar}>Toggle Random character</button>
+                            <Button onClick={this.toggleRandomChar}>Toggle Random character</Button>
                         </Col>
                     </Row>
                     <Row>
