@@ -21,19 +21,23 @@ export default class GotService {
     }
 
     //
-    getAllHouses() {
-        return this.getResource(`houses?page=1&pageSize=10`)
+    async getAllHouses() {
+        const res = await this.getResource(`houses?page=1&pageSize=10`);
+        return res.map(this._transformHouse);
     }
-    getHouse(id) {
-        return this.getResource(`houses/${id}`)
+    async getHouse(id) {
+        const house = await this.getResource(`houses/${id}`);
+        return house.map(this._transformHouse);
     }
 
     //
-    getAllBooks() {
-        return this.getResource(`books`)
+    async getAllBooks() {
+        const res = this.getResource(`books`);
+        return res.map(this._transformBook);
     }
-    getBook(id) {
-        return this.getResource(`books/${id}`)
+    async getBook(id) {
+        const book = this.getResource(`books/${id}`);
+        return book.map(this._transformBook);
     }
 
     //
@@ -47,7 +51,7 @@ export default class GotService {
         }
     }
 
-    _transformHoouse(house) {
+    _transformHouse(house) {
         return {
             name: house.name,
             region: house.region,

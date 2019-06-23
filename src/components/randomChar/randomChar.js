@@ -28,17 +28,23 @@ const Term = styled.span`
 
 export default class RandomChar extends Component {
 
-    constructor() {
-        super();
-        this.updateChar();
-    }
-
     gotService = new gotService();
 
     state = {
         char: {},
         loading: true,
         charVisible: true
+    }
+
+    componentDidMount() {
+        console.log('mounting');
+        this.updateChar();
+        this.timerId = setInterval(this.updateChar, 10000);
+    }
+
+    componentWillUnmount() {
+        console.log('unmounting');
+        clearInterval(this.timerId);
     }
 
     onCharLoaded = (char) => {
@@ -56,14 +62,15 @@ export default class RandomChar extends Component {
         })
     }
 
-    updateChar() {
-        const id = Math.floor(Math.random() * 3000 + 25); // 25-140
+    updateChar = () => {
+        const id = Math.floor(Math.random() * 100 + 25); // 25-140
         this.gotService.getCharacter(id)
             .then(this.onCharLoaded)
             .catch(this.onError);
     }
 
     render() {
+        console.log('render');
         const { char, loading, error } = this.state;
 
         const errorMessage = error ? <ErrorMessage /> : null;
