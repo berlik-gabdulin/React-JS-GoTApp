@@ -72,6 +72,10 @@ export default class CharDetails extends Component {
 
         const { char, loading, error } = this.state;
 
+        this.gotService._setNoData(char);
+        
+        console.log(char);
+
         const spinner = loading ? <Spinner /> : null;
 
         const errorMessage = error ? <ErrorMessage /> : null;

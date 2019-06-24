@@ -56,16 +56,7 @@ export default class GotService {
     }
 
     //
-    _transformCharacter(char) {
-
-        for (let prop in char) {
-            if (char[prop] === '') {
-                char[prop] = "no data :'(";
-            }
-        }
-
-        console.log(char);
-        
+    _transformCharacter(char) {  
         return {       
             name: char.name,
             gender: char.gender,
@@ -77,13 +68,6 @@ export default class GotService {
     }
 
     _transformHouse(house) {
-
-        for (let prop in house) {
-            if (house[prop] === '') {
-                house[prop] = "no data :'(";
-            }
-        }
-
         return {
             name: house.name,
             region: house.region,
@@ -95,13 +79,6 @@ export default class GotService {
         }
     }
     _transformBook(book) {
-
-        for (let prop in book) {
-            if (book[prop] === '') {
-                book[prop] = "no data :'(";
-            }
-        }
-
         return {
             name: book.name,
             numberOfPages: book.numberOfPages,
