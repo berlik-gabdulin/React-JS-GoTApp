@@ -42,13 +42,11 @@ export default class ItemList extends Component {
 
     renderItems(arr) {
         return arr.map((item, i) => {
-            const customKey = this.gotService._getItemKey(item.url);
             return (
                 <>
                     <CustomListGroupItem
-                        key={customKey}
-                        id={customKey}
-                        onClick={ () => this.props.onCharSelected(customKey.split('-')[1])}>
+                        key={item.key}
+                        onClick={ () => this.props.onCharSelected(item.key)}>
                         {item.name}
                     </CustomListGroupItem>
                 </>
@@ -59,9 +57,6 @@ export default class ItemList extends Component {
     render() {
 
         const { charList, error } = this.state;
-
-        // const errorMessage = error ? <ErrorMessage /> : null;
-        // const errorMessage = error ? <ErrorMessage /> : <ItemList onCharSelected={this.onCharSelected} />;
 
         if (!charList) {
             return <Spinner />
@@ -76,7 +71,6 @@ export default class ItemList extends Component {
         if (charList) {
             return (
                 <>
-                {/* {errorMessage} */}
                 <ListGroup className="list-group">
                     {items}
                 </ListGroup>

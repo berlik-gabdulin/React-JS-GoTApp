@@ -43,48 +43,44 @@ export default class GotService {
     _getItemKey(url) {
         const arr = url.split('/');
         const arrLength = arr.length;
-        const key = arr[arrLength - 2] + '-' + arr[arrLength - 1];
+        const key = arr[arrLength - 1];
         return key;
     }
 
-    _setNoData(obj) {
-        for (let prop in obj) {
-            if (obj[prop] === '') {
-                obj[prop] = "no data :'(";
-            }
-        }
-    }
-
     //
-    _transformCharacter(char) {  
-        return {       
-            name: char.name,
-            gender: char.gender,
-            born: char.born,
-            died: char.died,
-            culture: char.culture,
-            url: char.url
+    _transformCharacter(char, _getItemKey) {
+        const noData = "no data:(";
+        return {
+            name: char.name || noData,
+            gender: char.gender || noData,
+            born: char.born || noData,
+            died: char.died || noData,
+            culture: char.culture || noData,
+            url: char.url || noData,
+            key: this._getItemKey(char.url)
         }
     }
 
     _transformHouse(house) {
+        const noData = "no data:(";
         return {
-            name: house.name,
-            region: house.region,
-            words: house.words,
-            titles: house.titles,
-            overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons,
-            url: house.url
+            name: house.name || noData,
+            region: house.region || noData,
+            words: house.words || noData,
+            titles: house.titles || noData,
+            overlord: house.overlord || noData,
+            ancestralWeapons: house.ancestralWeapons || noData,
+            url: house.url || noData
         }
     }
     _transformBook(book) {
+        const noData = "no data:(";
         return {
-            name: book.name,
-            numberOfPages: book.numberOfPages,
-            publisher: book.publisher,
-            released: book.released,
-            url: book.url
+            name: book.name || noData,
+            numberOfPages: book.numberOfPages || noData,
+            publisher: book.publisher || noData,
+            released: book.released || noData,
+            url: book.url || noData
         }
     }
 

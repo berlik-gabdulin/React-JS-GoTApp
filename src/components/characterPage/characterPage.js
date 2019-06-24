@@ -32,8 +32,6 @@ export default class CharacterPage extends Component {
         const itemSelectList = error ? <SelectErrorMessage /> : <ItemList onCharSelected={this.onCharSelected} />;
         const selectChar = !selectedChar ? <SelectErrorMessage /> : <CharDetails charId={this.state.selectedChar} />;
 
-        // const charDetails =  : null;
-
         if (this.state.error) {
             return <ErrorMessage />
         }

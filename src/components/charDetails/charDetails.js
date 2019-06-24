@@ -71,8 +71,6 @@ export default class CharDetails extends Component {
     render() {
 
         const { char, loading, error } = this.state;
-
-        this.gotService._setNoData(char);
         
         console.log(char);
 

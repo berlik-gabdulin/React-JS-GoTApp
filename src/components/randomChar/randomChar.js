@@ -75,8 +75,6 @@ export default class RandomChar extends Component {
         console.log('render');
         const { char, loading, error } = this.state;
 
-        this.gotService._setNoData(char);
-
         const errorMessage = error ? <ErrorMessage /> : null;
 
         const spinner = loading ? <Spinner /> : null;
