@@ -27,9 +27,11 @@ export default class CharacterPage extends Component {
 
     render() {
 
-        const { selectedChar } = this.state;
+        const { selectedChar, error } = this.state;
 
+        const itemSelectList = error ? <SelectErrorMessage /> : <ItemList onCharSelected={this.onCharSelected} />;
         const selectChar = !selectedChar ? <SelectErrorMessage /> : <CharDetails charId={this.state.selectedChar} />;
+
         // const charDetails =  : null;
 
         if (this.state.error) {
@@ -40,7 +42,7 @@ export default class CharacterPage extends Component {
 
             <Row>
                 <Col md='6'>
-                    <ItemList onCharSelected={this.onCharSelected} />
+                    {itemSelectList}
                 </Col>
                 <Col md='6'>
                     {selectChar}

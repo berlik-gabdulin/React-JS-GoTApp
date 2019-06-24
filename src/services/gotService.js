@@ -12,7 +12,7 @@ export default class GotService {
         return await res.json();
     }
     async getAllCharacters() {
-        const res = await this.getResource(`characters?page=5&pageSize=10`);
+        const res = await this.getResource(`characters?page=7&pageSize=10`);
         return res.map(this._transformCharacter);
     }
     async getCharacter(id) {
@@ -40,6 +40,13 @@ export default class GotService {
         return book.map(this._transformBook);
     }
 
+    _getItemKey(url) {
+        const arr = url.split('/');
+        const arrLength = arr.length;
+        const key = arr[arrLength - 2] + '-' + arr[arrLength - 1];
+        return key;
+    }
+
     //
     _transformCharacter(char) {
         return {
@@ -47,7 +54,8 @@ export default class GotService {
             gender: char.gender,
             born: char.born,
             died: char.died,
-            culture: char.culture
+            culture: char.culture,
+            url: char.url
         }
     }
 
@@ -58,7 +66,8 @@ export default class GotService {
             words: house.words,
             titles: house.titles,
             overlord: house.overlord,
-            ancestralWeapons: house.ancestralWeapons
+            ancestralWeapons: house.ancestralWeapons,
+            url: house.url
         }
     }
     _transformBook(book) {
@@ -66,7 +75,9 @@ export default class GotService {
             name: book.name,
             numberOfPages: book.numberOfPages,
             publisher: book.publisher,
-            released: book.released
+            released: book.released,
+            url: book.url
         }
     }
+
 }

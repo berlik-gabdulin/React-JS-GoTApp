@@ -98,6 +98,7 @@ const View = ({char}) => {
                 <ListGroup flush>
                     <ListGroupItem className="d-flex justify-content-between">
                         <span className="term">Gender</span>
+                        {/* <span>{this.gender}</span> Раскомментировать для вызова ошибки  */}
                         <span>{gender}</span>
                     </ListGroupItem>
                     <ListGroupItem className="d-flex justify-content-between">
