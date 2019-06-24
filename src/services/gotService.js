@@ -48,7 +48,8 @@ export default class GotService {
     }
 
     //
-    _transformCharacter(char, _getItemKey) {
+    _transformCharacter(char) {
+        
         const noData = "no data:(";
         return {
             name: char.name || noData,
@@ -57,7 +58,7 @@ export default class GotService {
             died: char.died || noData,
             culture: char.culture || noData,
             url: char.url || noData,
-            key: this._getItemKey(char.url)
+            key: char.url.split('/')[char.url.split('/').length - 1]
         }
     }
 
@@ -70,7 +71,8 @@ export default class GotService {
             titles: house.titles || noData,
             overlord: house.overlord || noData,
             ancestralWeapons: house.ancestralWeapons || noData,
-            url: house.url || noData
+            url: house.url || noData,
+            key: house.url.split('/')[house.url.split('/').length - 1]
         }
     }
     _transformBook(book) {
@@ -80,7 +82,8 @@ export default class GotService {
             numberOfPages: book.numberOfPages || noData,
             publisher: book.publisher || noData,
             released: book.released || noData,
-            url: book.url || noData
+            url: book.url || noData,
+            key: book.url.split('/')[book.url.split('/').length - 1]
         }
     }
 
