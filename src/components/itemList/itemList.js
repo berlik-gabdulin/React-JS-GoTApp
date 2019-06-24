@@ -76,6 +76,7 @@ export default class ItemList extends Component {
         if (charList) {
             return (
                 <>
+                {/* {errorMessage} */}
                 <ListGroup className="list-group">
                     {items}
                 </ListGroup>

@@ -34,7 +34,7 @@ export default class CharDetails extends Component {
     componentDidUpdate(prevProps) {
         if (this.props.charId !== prevProps.charId) {
             this.updateChar();
-        }        
+        }
     }
 
     componentDidCatch() {
@@ -89,7 +89,7 @@ export default class CharDetails extends Component {
 }
 
 const View = ({char}) => {
-
+    
     const {name, gender, born, died, culture} = char;
 
     return (

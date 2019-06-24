@@ -36,6 +36,8 @@ export default class RandomChar extends Component {
         charVisible: true
     }
 
+    
+
     componentDidMount() {
         console.log('mounting');
         this.updateChar();

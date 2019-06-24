@@ -47,16 +47,26 @@ export default class GotService {
         return key;
     }
 
-    //
-    _transformCharacter(char) {
-        
-        for (let prop in char) {
-            if (char[prop] === '') {
-                return prop = 'no data'
+    _setNoData(obj) {
+        for (let prop in obj) {
+            if (obj[prop] === '') {
+                obj[prop] = "no data :'(";
             }
         }
+    }
+
+    //
+    _transformCharacter(char) {
+
+        for (let prop in char) {
+            if (char[prop] === '') {
+                char[prop] = "no data :'(";
+            }
+        }
+
+        console.log(char);
         
-        return {
+        return {       
             name: char.name,
             gender: char.gender,
             born: char.born,
@@ -67,6 +77,13 @@ export default class GotService {
     }
 
     _transformHouse(house) {
+
+        for (let prop in house) {
+            if (house[prop] === '') {
+                house[prop] = "no data :'(";
+            }
+        }
+
         return {
             name: house.name,
             region: house.region,
@@ -78,6 +95,13 @@ export default class GotService {
         }
     }
     _transformBook(book) {
+
+        for (let prop in book) {
+            if (book[prop] === '') {
+                book[prop] = "no data :'(";
+            }
+        }
+
         return {
             name: book.name,
             numberOfPages: book.numberOfPages,
