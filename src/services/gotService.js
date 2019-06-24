@@ -49,6 +49,13 @@ export default class GotService {
 
     //
     _transformCharacter(char) {
+        
+        for (let prop in char) {
+            if (char[prop] === '') {
+                return prop = 'no data'
+            }
+        }
+        
         return {
             name: char.name,
             gender: char.gender,
