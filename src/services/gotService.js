@@ -2,7 +2,7 @@ export default class GotService {
     constructor() {
         this._apiBase = 'https://www.anapioficeandfire.com/api/'
     }
-    async getResource(url) {
+    getResource = async (url) => {
         const res = await fetch(`${this._apiBase}${url}`);
 
         if (!res.ok) {
@@ -11,44 +11,37 @@ export default class GotService {
 
         return await res.json();
     }
-    async getAllCharacters() {
-        const res = await this.getResource(`characters?page=7&pageSize=10`);
+    getAllCharacters = async () => {
+        const res = await this.getResource(`/characters?page=7&pageSize=10`);
         return res.map(this._transformCharacter);
     }
-    async getCharacter(id) {
+    getCharacter = async (id) => {
         const character = await this.getResource(`characters/${id}`);
         return this._transformCharacter(character);
     }
 
     //
-    async getAllHouses() {
-        const res = await this.getResource(`houses?page=1&pageSize=10`);
+    getAllHouses = async () => {
+        const res = await this.getResource(`/houses?page=1&pageSize=10`);
         return res.map(this._transformHouse);
     }
-    async getHouse(id) {
-        const house = await this.getResource(`houses/${id}`);
-        return house.map(this._transformHouse);
+    getHouse = async (id) => {
+        const house = await this.getResource(`/houses/${id}`);
+        return this._transformHouse(house);
     }
 
     //
-    async getAllBooks() {
-        const res = this.getResource(`books`);
+    getAllBooks = async () => {
+        const res = await this.getResource(`/books/`);
         return res.map(this._transformBook);
     }
-    async getBook(id) {
-        const book = this.getResource(`books/${id}`);
-        return book.map(this._transformBook);
-    }
-
-    _getItemKey(url) {
-        const arr = url.split('/');
-        const arrLength = arr.length;
-        const key = arr[arrLength - 1];
-        return key;
+    getBook = async (id) => {
+        const book = await this.getResource(`books/${id}`);
+        return this._transformBook(book);
     }
 
     //
-    _transformCharacter(char) {
+    _transformCharacter = (char) => {
         
         const noData = "no data:(";
         return {
@@ -62,7 +55,7 @@ export default class GotService {
         }
     }
 
-    _transformHouse(house) {
+    _transformHouse = (house) => {
         const noData = "no data:(";
         return {
             name: house.name || noData,
@@ -75,7 +68,7 @@ export default class GotService {
             key: house.url.split('/')[house.url.split('/').length - 1]
         }
     }
-    _transformBook(book) {
+    _transformBook = (book) => {
         const noData = "no data:(";
         return {
             name: book.name || noData,

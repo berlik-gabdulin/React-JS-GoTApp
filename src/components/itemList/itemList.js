@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import gotService from '../../services/gotService';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 // import './itemList.css';
@@ -12,19 +11,19 @@ const CustomListGroupItem = styled(ListGroupItem)`
 
 export default class ItemList extends Component {
 
-    gotService = new gotService();
-
     state = {
-        charList: null,
+        itemList: null,
         loading: true,
         error: false
     }
 
     componentDidMount() {
-        this.gotService.getAllCharacters()
-            .then((charList) => {
+        const { getData } = this.props;
+
+        getData()
+            .then((itemList) => {
                 this.setState({
-                    charList,
+                    itemList,
                     loading: false
                 })
             })
@@ -41,13 +40,16 @@ export default class ItemList extends Component {
     }
 
     renderItems(arr) {
-        return arr.map((item, i) => {
+        return arr.map((item) => {
+            const {key} = item;
+            const label = this.props.renderItem(item);
+
             return (
                 <>
                     <CustomListGroupItem
                         key={item.key}
-                        onClick={ () => this.props.onCharSelected(item.key)}>
-                        {item.name}
+                        onClick={() => this.props.onItemSelected(key)}>
+                        {label}
                     </CustomListGroupItem>
                 </>
             )
@@ -56,9 +58,9 @@ export default class ItemList extends Component {
 
     render() {
 
-        const { charList, error } = this.state;
+        const { itemList, error } = this.state;
 
-        if (!charList) {
+        if (!itemList) {
             return <Spinner />
         }
 
@@ -66,14 +68,14 @@ export default class ItemList extends Component {
             return <ErrorMessage />
         }
 
-        const items = this.renderItems(charList);
+        const items = this.renderItems(itemList);
 
-        if (charList) {
+        if (itemList) {
             return (
                 <>
-                <ListGroup className="list-group">
-                    {items}
-                </ListGroup>
+                    <ListGroup className="list-group">
+                        {items}
+                    </ListGroup>
                 </>
             );
         }

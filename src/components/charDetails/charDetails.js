@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {ListGroup, ListGroupItem} from 'reactstrap';
+import React, { Component } from 'react';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services/gotService';
 import Spinner from '../spinner';
@@ -15,7 +15,17 @@ const CharDetailsWrap = styled.div`
     }
 `
 
-
+const Field = ({ item, field, label }) => {
+    return (
+        <ListGroupItem className="d-flex justify-content-between">
+            <span className="term">{label}</span>
+            <span>{[field]}</span>
+        </ListGroupItem>
+    )
+}
+export {
+    Field
+}
 
 export default class CharDetails extends Component {
 
@@ -44,7 +54,7 @@ export default class CharDetails extends Component {
     }
 
     updateChar() {
-        const {charId} = this.props;
+        const { charId } = this.props;
         if (!charId) {
             return;
         }
@@ -55,24 +65,38 @@ export default class CharDetails extends Component {
         })
 
         this.gotService.getCharacter(charId)
-        .then(this.onCharLoaded)
-        .then((char) => {
-            this.setState({
-                char,
-                loading: false,
-                // error: false
+            .then(this.onCharLoaded)
+            .then((char) => {
+                this.setState({
+                    char,
+                    loading: false,
+                    // error: false
+                })
             })
-        })
         // this.foo.bar = 0;
     }
 
-    
+
 
     render() {
 
         const { char, loading, error } = this.state;
-        
+
         console.log(char);
+
+        const View = ({ char }) => {
+
+            const { name, gender, born, died, culture } = char;
+        
+            return (
+                <>
+                    <h4>{name}</h4>
+                    <ListGroup flush>
+                        {this.props.children}
+                    </ListGroup>
+                </>
+            )
+        }
 
         const spinner = loading ? <Spinner /> : null;
 
@@ -90,32 +114,4 @@ export default class CharDetails extends Component {
     }
 }
 
-const View = ({char}) => {
-    
-    const {name, gender, born, died, culture} = char;
 
-    return (
-        <>
-            <h4>{name}</h4>
-                <ListGroup flush>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Gender</span>
-                        {/* <span>{this.gender}</span> Раскомментировать для вызова ошибки  */}
-                        <span>{gender}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Born</span>
-                        <span>{born}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Died</span>
-                        <span>{died}</span>
-                    </ListGroupItem>
-                    <ListGroupItem className="d-flex justify-content-between">
-                        <span className="term">Culture</span>
-                        <span>{culture}</span>
-                    </ListGroupItem>
-                </ListGroup>
-        </>
-    )
-}

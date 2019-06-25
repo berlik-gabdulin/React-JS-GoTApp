@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import Header from '../header';
 import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
+import ItemList from '../itemList';
+import CharDetails from '../charDetails';
+import gotService from '../../services/gotService';
 
 import CharacterPage from '../characterPage';
 
@@ -13,6 +16,8 @@ const MarginButton = styled(Button)`
 `
 
 export default class App extends Component {
+
+    gotService = new gotService();
 
     state = {
         showRandomChar: true,
@@ -40,7 +45,7 @@ export default class App extends Component {
         const randomChar = showRandomChar ? <RandomChar /> : null;
 
         if (this.state.error) {
-            return <ErrorMessage/>
+            return <ErrorMessage />
         }
 
         return (
@@ -56,6 +61,30 @@ export default class App extends Component {
                         </Col>
                     </Row>
                     <CharacterPage />
+
+                    <Row>
+                        <Col md='6'>
+                            <ItemList
+                                onItemSelected={this.onItemSelected}
+                                getData={this.gotService.getAllBooks}
+                                renderItem={(item) => item.name} />
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails charId={this.state.selectedChar} />
+                        </Col>
+                    </Row>
+
+                    <Row>
+                        <Col md='6'>
+                            <ItemList
+                                onItemSelected={this.onItemSelected} 
+                                getData={this.gotService.getAllHouses}
+                                renderItem={(item) => `${item.name} (${item.words})`} />
+                        </Col>
+                        <Col md='6'>
+                            <CharDetails charId={this.state.selectedChar} />
+                        </Col>
+                    </Row>
                 </Container>
             </>
         );
