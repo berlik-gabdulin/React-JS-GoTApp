@@ -29,7 +29,7 @@ export default class HousePage extends Component {
             <ItemDetails 
             getData={this.gotService.getHouse}
             itemId={this.state.item}
-            itemType={"house"}>
+            itemMessage={"choose a house"}>
                 <Field field='words' label='Words'/>
                 <Field field='region' label='Region'/>
                 <Field field='coatOfArms' label='Coat Of Arms'/>

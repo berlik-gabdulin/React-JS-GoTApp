@@ -71,7 +71,7 @@ export default class ItemDetails extends Component {
                 this.setState({
                     item,
                     loading: false,
-                    // error: false
+                    error: false
                 })
             })
         // this.foo.bar = 0;
@@ -81,7 +81,7 @@ export default class ItemDetails extends Component {
 
     render() {
 
-        const {itemType} = this.props;
+        const {itemMessage} = this.props;
 
         const { item, itemIsChosen, loading, error } = this.state;
 
@@ -105,7 +105,7 @@ export default class ItemDetails extends Component {
 
         
         const chooseItem = (
-            <>Please select a {itemType}</>
+            <>Please {itemMessage}</>
         )
 
         const nullItem = !itemIsChosen ? chooseItem : null;

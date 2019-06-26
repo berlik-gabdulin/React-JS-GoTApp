@@ -30,7 +30,7 @@ export default class CharacterPage extends Component {
             <ItemDetails 
             getData={this.gotService.getCharacter}
             itemId={this.state.item}
-            itemType={"character"}>
+            itemMessage={"choose a character"}>
                 <Field field='gender' label='Gender'/>
                 <Field field='born' label='Born'/>
                 <Field field='died' label='Died'/>
