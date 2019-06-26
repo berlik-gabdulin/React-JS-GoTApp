@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { ListGroup, ListGroupItem, Alert } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services/gotService';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
-const CharDetailsWrap = styled.div`
+const ItemDetailsWrap = styled.div`
     background-color: #fff;
-    padding: 25px 25px 15px 25px;
+    padding: 25px 25px 25px 25px;
     margin-bottom: 40px;
     h4 {
         margin-bottom: 20px;
@@ -19,7 +19,7 @@ const Field = ({ item, field, label }) => {
     return (
         <ListGroupItem className="d-flex justify-content-between">
             <span className="term">{label}</span>
-            <span>{[field]}</span>
+            <span>{item[field]}</span>
         </ListGroupItem>
     )
 }
@@ -27,23 +27,24 @@ export {
     Field
 }
 
-export default class CharDetails extends Component {
+export default class ItemDetails extends Component {
 
     gotService = new gotService();
 
     state = {
-        char: null,
+        item: null,
+        itemIsChosen: false,
         error: false,
-        loading: true
+        loading: false
     }
 
     componentDidMount() {
-        this.updateChar();
+        this.updateItem();
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.charId !== prevProps.charId) {
-            this.updateChar();
+        if (this.props.itemId !== prevProps.itemId) {
+            this.updateItem();
         }
     }
 
@@ -53,22 +54,22 @@ export default class CharDetails extends Component {
         })
     }
 
-    updateChar() {
-        const { charId } = this.props;
-        if (!charId) {
+    updateItem() {
+        const { getData, itemId } = this.props;
+        if (!itemId) {
             return;
         }
 
         this.setState({
-            char: null,
-            loading: true
+            item: null,
+            loading: true,
+            itemIsChosen: true
         })
 
-        this.gotService.getCharacter(charId)
-            .then(this.onCharLoaded)
-            .then((char) => {
+        getData(itemId)
+            .then((item) => {
                 this.setState({
-                    char,
+                    item,
                     loading: false,
                     // error: false
                 })
@@ -80,36 +81,48 @@ export default class CharDetails extends Component {
 
     render() {
 
-        const { char, loading, error } = this.state;
+        const {itemType} = this.props;
 
-        console.log(char);
+        const { item, itemIsChosen, loading, error } = this.state;
 
-        const View = ({ char }) => {
+        const View = ({ item }) => {
 
-            const { name, gender, born, died, culture } = char;
+            const { name } = item;
         
             return (
                 <>
                     <h4>{name}</h4>
                     <ListGroup flush>
-                        {this.props.children}
+                        {
+                            React.Children.map(this.props.children, (child) => {
+                                return React.cloneElement(child, {item})
+                            })
+                        }
                     </ListGroup>
                 </>
             )
         }
 
+        
+        const chooseItem = (
+            <>Please select a {itemType}</>
+        )
+
+        const nullItem = !itemIsChosen ? chooseItem : null;
+
         const spinner = loading ? <Spinner /> : null;
 
         const errorMessage = error ? <ErrorMessage /> : null;
 
-        const content = !(loading || error || !char) ? <View char={char} /> : null;
+        const content = !(loading || error || !item) ? <View item={item} /> : null;
 
         return (
-            <CharDetailsWrap className="rounded">
+            <ItemDetailsWrap className="rounded">
+                {nullItem}
                 {errorMessage}
                 {spinner}
                 {content}
-            </CharDetailsWrap>
+            </ItemDetailsWrap>
         );
     }
 }

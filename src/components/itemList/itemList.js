@@ -73,7 +73,7 @@ export default class ItemList extends Component {
         if (itemList) {
             return (
                 <>
-                    <ListGroup className="list-group">
+                    <ListGroup className="list-group" itemType={}>
                         {items}
                     </ListGroup>
                 </>
