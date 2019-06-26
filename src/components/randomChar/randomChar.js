@@ -40,7 +40,7 @@ export default class RandomChar extends Component {
     componentDidMount() {
         console.log('mounting');
         this.updateChar();
-        this.timerId = setInterval(this.updateChar, 2000);
+        this.timerId = setInterval(this.updateChar, 15000);
     }
 
     componentWillUnmount() {
@@ -48,13 +48,13 @@ export default class RandomChar extends Component {
         clearInterval(this.timerId);
     }
 
-    onCharLoaded = (char) => {
-        this.setState({
-            char,
-            loading: false,
-            error: false
-        })
-    }
+    // onCharLoaded = (char) => {
+    //     this.setState({
+    //         char,
+    //         loading: false,
+    //         error: false
+    //     })
+    // }
 
     onError = (err) => {
         this.setState({
@@ -65,10 +65,12 @@ export default class RandomChar extends Component {
 
 
     updateChar = () => {
-        const id = Math.floor(Math.random() * 3000 + 25); // 25-140
-        this.gotService.getCharacter(id)
-            .then(this.onCharLoaded)
-            .catch(this.onError);
+        const id = Math.floor(Math.random() * 300 + 25); // 25-140
+        this.setState({
+            char: id,
+            loading: false,
+            error: false
+        })
     }
 
     componentDidCatch() {
@@ -85,7 +87,7 @@ export default class RandomChar extends Component {
         const itemDetails = (
             <ItemDetails 
             getData={this.gotService.getCharacter}
-            itemId={this.state.char.key}
+            itemId={char}
             itemMessage={"wait"}>
                 <Field field='gender' label='Gender'/>
                 <Field field='born' label='Born'/>
