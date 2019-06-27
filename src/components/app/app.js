@@ -7,9 +7,9 @@ import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
 import gotService from '../../services/gotService';
 
-import {CharacterPage, HousePage, BookPage, BooksItem} from '../pages';
+import {HomePage, NotFound, CharacterPage, HousePage, BookPage, BooksItem} from '../pages';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 const MarginButton = styled(Button)`
     margin-bottom: 15px;
@@ -61,13 +61,19 @@ export default class App extends Component {
                                 <MarginButton onClick={this.toggleRandomChar}>Toggle Random character</MarginButton>
                             </Col>
                         </Row>
+                        <Switch>
+                            <Route path='/' exact component={HomePage}/>
 
-                        <Route path='/characters' component={CharacterPage}/>
-                        <Route path='/houses' component={HousePage}/>
-                        <Route path='/books' exact component={BookPage}/>
-                        <Route path='/books/:id' render={
-                            () => <BooksItem />
-                        }/>
+                            <Route path='/characters' component={CharacterPage}/>
+                            <Route path='/houses' component={HousePage}/>
+                            <Route path='/books' exact component={BookPage}/>
+                            <Route path='/books/:id' render={
+                                ({match}) => {
+                                    const {id} = match.params;
+                                return <BooksItem bookId = { id }/>}
+                            }/>
+                            <Route path='*' exact component={NotFound}/>
+                        </Switch>
 
                     </Container>
                 </div>
