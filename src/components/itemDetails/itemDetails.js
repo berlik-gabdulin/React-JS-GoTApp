@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ListGroup, ListGroupItem, Alert } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import styled from 'styled-components';
 import gotService from '../../services/gotService';
 import Spinner from '../spinner';
@@ -48,12 +48,6 @@ export default class ItemDetails extends Component {
         }
     }
 
-    componentDidCatch() {
-        this.setState({
-            error: true
-        })
-    }
-
     updateItem() {
         const { getData, itemId } = this.props;
         if (!itemId) {
@@ -74,10 +68,21 @@ export default class ItemDetails extends Component {
                     error: false
                 })
             })
+            .catch(() => {
+                this.setState({
+                    error: true,
+                    loading: false
+                })
+            })
         // this.foo.bar = 0;
     }
 
-
+    
+    componentDidCatch() {
+        this.setState({
+            error: true
+        })
+    }
 
     render() {
 

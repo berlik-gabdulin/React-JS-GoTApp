@@ -3,29 +3,6 @@ import ItemDetails, {Field} from '../itemDetails';
 import gotService from '../../services/gotService';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
-// import './randomChar.css';
-
-import { ListGroup, ListGroupItem } from 'reactstrap';
-import styled from 'styled-components';
-
-const RandomBlock = styled.div`
-    background-color: #fff;
-    padding: 25px 25px 15px 25px;
-    margin-bottom: 40px;
-    h4 {
-        margin-bottom: 20px;
-        text-align: center;
-    }
-    img {
-        display: block;
-        margin: 10px auto;
-        max-width: 100%;
-        
-    }
-`
-const Term = styled.span`
-    font-weight: bold;
-`
 
 export default class RandomChar extends Component {
 

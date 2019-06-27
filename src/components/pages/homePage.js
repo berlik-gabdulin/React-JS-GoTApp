@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Row, Container, Button } from 'reactstrap';
+import { Card, Container } from 'reactstrap';
 
 export default class HomePage extends Component {
 
