@@ -7,9 +7,9 @@ import RandomChar from '../randomChar';
 import ErrorMessage from '../errorMessage';
 import gotService from '../../services/gotService';
 
-import CharacterPage from '../pages/characterPage';
-import HousePage from '../pages/housePage';
-import BookPage from '../pages/bookPage';
+import {CharacterPage, HousePage, BookPage, BooksItem} from '../pages';
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const MarginButton = styled(Button)`
     margin-bottom: 15px;
@@ -49,24 +49,29 @@ export default class App extends Component {
         }
 
         return (
-            <>
-                <Container>
-                    <Header />
-                </Container>
-                <Container>
-                    <Row>
-                        <Col lg={{ size: 5, offset: 0 }}>
-                            {randomChar}
-                            <MarginButton onClick={this.toggleRandomChar}>Toggle Random character</MarginButton>
-                        </Col>
-                    </Row>
-                    <CharacterPage />
-                    <HousePage />
-                    <BookPage />
+            <Router>
+                <div className="app">
+                    <Container>
+                        <Header />
+                    </Container>
+                    <Container>
+                        <Row>
+                            <Col lg={{ size: 5, offset: 0 }}>
+                                {randomChar}
+                                <MarginButton onClick={this.toggleRandomChar}>Toggle Random character</MarginButton>
+                            </Col>
+                        </Row>
 
-                    
-                </Container>
-            </>
+                        <Route path='/characters' component={CharacterPage}/>
+                        <Route path='/houses' component={HousePage}/>
+                        <Route path='/books' exact component={BookPage}/>
+                        <Route path='/books/:id' render={
+                            () => <BooksItem />
+                        }/>
+
+                    </Container>
+                </div>
+            </Router>
         );
     }
 };
